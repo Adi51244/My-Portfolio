@@ -2,6 +2,8 @@
 
 A production-ready personal portfolio website for an AI/ML Engineer & Full-Stack Developer, built with modern web technologies and optimized for technical interviews.
 
+### 🌐 [Live Demo](https://my-portfolio-aditya-kumar.vercel.app/)
+
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?logo=tailwindcss&logoColor=white)
