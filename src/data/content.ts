@@ -115,9 +115,11 @@ export interface Project {
   github: string;
   demo?: string;
   featured: boolean;
+  category: 'ai-ml' | 'web' | 'game' | 'backend';
 }
 
 export const projects: Project[] = [
+  // ==================== AI/ML & Computer Vision Projects ====================
   {
     title: 'VyapaarAI',
     subtitle: 'AI Self-Checkout System',
@@ -133,6 +135,7 @@ export const projects: Project[] = [
     github: 'https://github.com/Adi51244/self-checkout-system',
     demo: '',
     featured: true,
+    category: 'ai-ml',
   },
   {
     title: 'E-commerce Fraud Detection',
@@ -149,35 +152,109 @@ export const projects: Project[] = [
     github: 'https://github.com/Adi51244/ECOMMERCE_FRAUD_DETECTION',
     demo: 'https://ecommerce-fraud-detection.vercel.app/',
     featured: true,
+    category: 'ai-ml',
   },
   {
-    title: 'Plant Disease Detection',
-    subtitle: 'AI-Powered Agricultural Tool',
-    problem: 'Early plant disease detection is critical for crop yield but requires expert knowledge.',
-    solution: 'Created a deep learning system that identifies plant diseases from leaf images with high accuracy.',
-    techStack: ['TensorFlow', 'Python', 'Flask', 'OpenCV'],
+    title: 'LeafIQ',
+    subtitle: 'AI-Powered Plant Disease Detection System',
+    problem: 'Early plant disease detection is critical for crop yield but requires expert knowledge that farmers often lack access to.',
+    solution: 'Built a multi-AI intelligence system combining YOLOv8 detection with Gemini AI, Google Search, Wikipedia, and PlantNet APIs for comprehensive disease analysis and treatment recommendations.',
+    techStack: ['YOLOv8', 'Flask', 'Gemini AI', 'OpenCV', 'Python', 'Bootstrap'],
     metrics: [
-      'Multi-class classification',
-      'Real-time inference',
-      'Mobile-friendly UI',
+      '85-95% detection accuracy',
+      '29+ diseases supported',
+      '10+ plant species',
+      '<3 sec processing',
     ],
     github: 'https://github.com/Adi51244/AI-Powered-Plant-Disease-Detection-System',
+    demo: 'https://leafiq.up.railway.app/',
     featured: true,
+    category: 'ai-ml',
   },
   {
-    title: 'Human Detection & Classification',
-    subtitle: 'Age & Gender Recognition',
-    problem: 'Automated demographic analysis needed for retail analytics and security systems.',
-    solution: 'Built a computer vision pipeline for real-time human detection with age and gender classification.',
-    techStack: ['OpenCV', 'Deep Learning', 'Python', 'HTML/CSS'],
+    title: 'Human Detection & Age/Gender Classification',
+    subtitle: 'Real-time Demographic Analysis System',
+    problem: 'Automated demographic analysis needed for retail analytics, security systems, and market research.',
+    solution: 'Built real-time computer vision system using YOLOv8 for human detection and ResNet-18 for demographic classification with dual interface (Web + Desktop).',
+    techStack: ['YOLOv8', 'PyTorch', 'ResNet-18', 'Flask', 'OpenCV', 'Python'],
     metrics: [
-      'Real-time processing',
-      'Multi-person detection',
-      'Age + Gender output',
+      '93% gender accuracy',
+      '9 age groups',
+      '25-30 FPS real-time',
+      'Web + Desktop apps',
     ],
     github: 'https://github.com/Adi51244/Human-Detection-Age-Gender-Classification',
-    featured: false,
+    featured: true,
+    category: 'ai-ml',
   },
+  {
+    title: 'Damaged Box Detection',
+    subtitle: 'Quality Control CV System',
+    problem: 'Manual inspection of packaging quality is time-consuming and prone to human error in logistics.',
+    solution: 'Developed a computer vision system to automatically detect damaged boxes in warehouse/logistics environments.',
+    techStack: ['YOLOv8', 'Python', 'OpenCV', 'Deep Learning'],
+    metrics: [
+      'Automated inspection',
+      'Real-time detection',
+      'Quality assurance',
+    ],
+    github: 'https://github.com/Adi51244/Damaged_Box',
+    featured: false,
+    category: 'ai-ml',
+  },
+
+  // ==================== Web Applications ====================
+  {
+    title: 'CinemaSearch',
+    subtitle: 'Movie Search & Favorites App',
+    problem: 'Finding and organizing movies across multiple platforms is tedious and fragmented.',
+    solution: 'Built a modern movie search app with OMDb API integration, favorites system, and beautiful glassmorphism UI.',
+    techStack: ['React', 'Material UI', 'OMDb API', 'LocalStorage'],
+    metrics: [
+      'Real-time search',
+      'Favorites with persistence',
+      'Responsive design',
+    ],
+    github: 'https://github.com/Adi51244/CinemaSearch',
+    demo: 'https://cinema-search-one.vercel.app/',
+    featured: true,
+    category: 'web',
+  },
+  {
+    title: 'Job Application Portal',
+    subtitle: 'Full-Stack Recruitment Platform',
+    problem: 'Job seekers and recruiters need a centralized platform to manage applications efficiently.',
+    solution: 'Created a full-stack job portal with user authentication, application tracking, and admin dashboard.',
+    techStack: ['PHP', 'MySQL', 'Bootstrap', 'JavaScript'],
+    metrics: [
+      'User & Admin dashboards',
+      'Application tracking',
+      'Secure authentication',
+    ],
+    github: 'https://github.com/Adi51244/Job-Application-Portal',
+    featured: false,
+    category: 'web',
+  },
+
+  // ==================== Fun Games ====================
+  {
+    title: 'Spaceship Maze Puzzle',
+    subtitle: 'Mind-Bending Space Navigation Game',
+    problem: 'Puzzle game lovers want challenging brain teasers with engaging visuals and progression systems.',
+    solution: 'Created an addictive maze puzzle game with 25 randomly generated levels, scoring system, and cyberpunk aesthetics.',
+    techStack: ['JavaScript', 'CSS3', 'HTML5', 'Vercel'],
+    metrics: [
+      '25 difficulty levels',
+      'Random maze generation',
+      'Star rating system',
+    ],
+    github: 'https://github.com/Adi51244/SPACESHIP-MAZE',
+    demo: 'https://spaceship-maze.vercel.app/',
+    featured: true,
+    category: 'game',
+  },
+
+  // ==================== Backend/API Projects ====================
   {
     title: 'StudyMate Backend',
     subtitle: 'Educational Platform API',
@@ -191,7 +268,17 @@ export const projects: Project[] = [
     ],
     github: 'https://github.com/Adi51244/studymate-backend',
     featured: false,
+    category: 'backend',
   },
+];
+
+// Project categories for filtering
+export const projectCategories = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'ai-ml', label: 'AI/ML & CV' },
+  { id: 'web', label: 'Web Apps' },
+  { id: 'game', label: 'Games' },
+  { id: 'backend', label: 'Backend' },
 ];
 
 // Experience Data

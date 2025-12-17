@@ -21,7 +21,7 @@ export default function Footer() {
               <span className="text-violet-500">_</span>
             </a>
             <p className="text-zinc-500 text-[10px] font-mono leading-relaxed max-w-xs mx-auto md:mx-0">
-              AI/ML Engineer & Full-Stack Developer building intelligent systems with measurable impact.
+              Building AI/ML systems: YOLOv8 computer vision, multi-AI integration with Gemini, and full-stack applications with real-world impact.
             </p>
           </div>
 
@@ -83,9 +83,12 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             {/* Copyright */}
             <div className="text-zinc-600 text-[8px] sm:text-[10px] font-mono text-center sm:text-left flex items-center gap-1">
-              <span className="text-violet-500">&gt;</span> © {currentYear} {personalInfo.name}. Made with 
-              <Heart className="w-3 h-3 text-red-500 inline mx-1 fill-red-500" />
-              & React
+              <span className="text-violet-500">&gt;</span> © {currentYear} {personalInfo.name}
+            </div>
+
+            {/* Made with love */}
+            <div className="text-zinc-500 text-[10px] font-mono flex items-center gap-1">
+              Made with <Heart className="w-3 h-3 text-red-500 fill-red-500 mx-1" /> by {personalInfo.name}
             </div>
 
             {/* Back to Top */}

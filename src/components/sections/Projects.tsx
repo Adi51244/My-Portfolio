@@ -1,14 +1,32 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Github, ExternalLink, ArrowRight } from 'lucide-react';
+import { Github, ExternalLink, Brain, Globe, Gamepad2, Server } from 'lucide-react';
 import SectionHeading from '../ui/SectionHeading';
 import Button from '../ui/Button';
 import TechTag from '../ui/TechTag';
-import { projects } from '../../data/content';
+import { projects, projectCategories } from '../../data/content';
 import { staggerContainer, staggerItem, viewportSettings } from '../../lib/animations';
 
+const categoryIcons = {
+  'all': null,
+  'ai-ml': Brain,
+  'web': Globe,
+  'game': Gamepad2,
+  'backend': Server,
+};
+
 export default function Projects() {
-  const featuredProjects = projects.filter((p) => p.featured);
-  const otherProjects = projects.filter((p) => !p.featured);
+  const [activeCategory, setActiveCategory] = useState('all');
+  
+  const filteredProjects = activeCategory === 'all' 
+    ? projects 
+    : projects.filter(p => p.category === activeCategory);
+  
+  // When a specific category is selected, show all projects in that category together
+  // Only split into featured/other when showing "all" projects
+  const showSplit = activeCategory === 'all';
+  const featuredProjects = showSplit ? filteredProjects.filter((p) => p.featured) : filteredProjects;
+  const otherProjects = showSplit ? filteredProjects.filter((p) => !p.featured) : [];
 
   return (
     <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 relative bg-dot-pattern">
@@ -22,12 +40,38 @@ export default function Projects() {
           subtitle="Production-grade AI systems with measurable business impact"
         />
 
+        {/* Category Filter */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-2 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewportSettings}
+        >
+          {projectCategories.map((cat) => {
+            const Icon = categoryIcons[cat.id as keyof typeof categoryIcons];
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-[10px] sm:text-xs transition-all duration-300 ${
+                  activeCategory === cat.id
+                    ? 'bg-violet-500/20 text-violet-400 border border-violet-500/50'
+                    : 'bg-zinc-900/50 text-zinc-500 border border-zinc-800/50 hover:text-zinc-300 hover:border-zinc-700'
+                }`}
+              >
+                {Icon && <Icon className="w-3 h-3 sm:w-4 sm:h-4" />}
+                {cat.label}
+              </button>
+            );
+          })}
+        </motion.div>
+
         {/* Featured Projects */}
         <motion.div
+          key={`featured-${activeCategory}`}
           className="space-y-8 mb-16"
           initial="hidden"
-          whileInView="visible"
-          viewport={viewportSettings}
+          animate="visible"
           variants={staggerContainer}
         >
           {featuredProjects.map((project) => (
@@ -37,6 +81,20 @@ export default function Projects() {
               className="group relative bg-zinc-900/30 border border-zinc-800/50 rounded-2xl p-6 md:p-8 hover:border-violet-500/30 hover:shadow-[0_0_40px_rgba(139,92,246,0.1)] transition-all duration-300"
             >
               <div className="relative z-10">
+                {/* Category Badge */}
+                <div className="absolute top-0 right-0">
+                  <span className={`px-3 py-1 rounded-full text-[8px] font-mono uppercase tracking-wider ${
+                    project.category === 'ai-ml' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                    project.category === 'web' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                    project.category === 'game' ? 'bg-pink-500/20 text-pink-400 border border-pink-500/30' :
+                    'bg-orange-500/20 text-orange-400 border border-orange-500/30'
+                  }`}>
+                    {project.category === 'ai-ml' ? 'AI/ML' : 
+                     project.category === 'web' ? 'Web App' :
+                     project.category === 'game' ? 'Game' : 'Backend'}
+                  </span>
+                </div>
+
                 {/* Header */}
                 <div className="mb-6">
                   <h3 className="text-sm md:text-base font-bold text-zinc-100 mb-2 font-mono uppercase tracking-wide group-hover:text-violet-400 transition-colors">
@@ -127,10 +185,10 @@ export default function Projects() {
               <span className="text-violet-500">&gt;</span> Other Projects
             </h3>
             <motion.div
+              key={`other-${activeCategory}`}
               className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"
               initial="hidden"
-              whileInView="visible"
-              viewport={viewportSettings}
+              animate="visible"
               variants={staggerContainer}
             >
               {otherProjects.map((project) => (
@@ -149,25 +207,59 @@ export default function Projects() {
                   )}
                   <p className="text-zinc-500 text-sm mb-4">{project.solution}</p>
 
+                  {/* Category badge for other projects */}
+                  <div className="mb-3">
+                    <span className={`px-2 py-0.5 rounded text-[7px] font-mono uppercase ${
+                      project.category === 'ai-ml' ? 'bg-blue-500/20 text-blue-400' :
+                      project.category === 'web' ? 'bg-green-500/20 text-green-400' :
+                      project.category === 'game' ? 'bg-pink-500/20 text-pink-400' :
+                      'bg-orange-500/20 text-orange-400'
+                    }`}>
+                      {project.category === 'ai-ml' ? 'AI/ML' : 
+                       project.category === 'web' ? 'Web' :
+                       project.category === 'game' ? 'Game' : 'Backend'}
+                    </span>
+                  </div>
+
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.techStack.slice(0, 4).map((tech) => (
                       <TechTag key={tech} name={tech} />
                     ))}
                   </div>
 
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-violet-400 hover:text-violet-300 transition-colors font-mono"
-                  >
-                    VIEW ON GITHUB
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-violet-400 hover:text-violet-300 transition-colors font-mono"
+                    >
+                      <Github className="w-3 h-3" />
+                      GITHUB
+                    </a>
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-green-400 hover:text-green-300 transition-colors font-mono"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        DEMO
+                      </a>
+                    )}
+                  </div>
                 </motion.article>
               ))}
             </motion.div>
           </>
+        )}
+
+        {/* Empty state */}
+        {filteredProjects.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-zinc-500 font-mono text-sm">No projects found in this category.</p>
+          </div>
         )}
       </div>
     </section>
